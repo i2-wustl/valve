@@ -32,7 +32,7 @@ Options:
   -h, --help  Show this message and exit.
 
 Commands:
-  howdy  subcommand template
+  hello  subcommand template
 ```
 
 Addtionally, try `valve <subcommand> --help` for more details on a particular subcommand.
