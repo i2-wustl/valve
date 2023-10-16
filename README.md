@@ -12,7 +12,10 @@ It's currently both a CLI and python wrapper to the databasin [REST API][2].
 
 # Installation
 
-    pip install git+https://github.com/i2-wustl/valve.git@main
+    pip install git+ssh://git@github.com/i2-wustl/valve.git@main (if private repository)
+    pip install git+https://github.com/i2-wustl/valve.git@main   (if public respository)
+
+_(Currently assuming that you have ssh keys setup to the git provider.)_  Otherwise, use a [token based approach][4].
 
 # Usage
 
@@ -76,3 +79,4 @@ pip install -e .
 [1]: https://technologypartners.net
 [2]: https://demo.databasin.co/api/docs/swagger-ui/index.html?url=https://demo.databasin.co/api/swagger.json#/
 [3]: https://www.google.com
+[4]: https://docs.readthedocs.io/en/stable/guides/private-python-packages.html
