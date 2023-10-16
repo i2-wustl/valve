@@ -75,6 +75,10 @@ pip install -e .
 
 ## Testing
 
+In the root project directory run:
+
+    make test
+
 [0]: https://demo.databasin.co
 [1]: https://technologypartners.net
 [2]: https://demo.databasin.co/api/docs/swagger-ui/index.html?url=https://demo.databasin.co/api/swagger.json#/
