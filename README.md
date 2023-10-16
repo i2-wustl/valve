@@ -15,7 +15,7 @@ It's currently both a CLI and python wrapper to the databasin [REST API][2].
     pip install git+ssh://git@github.com/i2-wustl/valve.git@main (if private repository)
     pip install git+https://github.com/i2-wustl/valve.git@main   (if public respository)
 
-_(Currently assuming that you have ssh keys setup to the git provider.)_  Otherwise, use a [token based approach][4].
+_(Currently assuming that you have ssh keys setup to the git provider.  Otherwise, use a [token based approach][4].)_
 
 # Usage
 
