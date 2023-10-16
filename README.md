@@ -1,4 +1,6 @@
-<center><img src="https://live.staticflickr.com/4234/35829948885_7f49bca92a_h.jpg" alt="Valve Image from Flickr" width="500"/></center>
+<p align="center">
+    <img src="https://live.staticflickr.com/4234/35829948885_7f49bca92a_h.jpg" alt="Valve Image from Flickr" width="500"/>
+</p>
 <!-- https://www.flickr.com/photos/cogdog/35829948885/ -->
 
 # Valve
