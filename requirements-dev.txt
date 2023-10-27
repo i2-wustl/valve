@@ -2,3 +2,4 @@ click
 clint
 inquirer
 requests
+python-dotenv
