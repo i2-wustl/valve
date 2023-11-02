@@ -1,6 +1,7 @@
 import signal
 import click
-from valve.core.users_client import UsersClient
+from valve.clients.base import OAuthClient
+from valve.clients.users import UsersClient
 from pprint import pprint
 from valve.version import __version__
 from dotenv import load_dotenv

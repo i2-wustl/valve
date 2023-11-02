@@ -1,7 +1,7 @@
 import os
-from valve.core.base_client import BaseClient
+from valve.clients.base import BaseClient
 
-class UsersClient(BaseClient):
+class Users(BaseClient):
     _name = "users"
 
     def list(self):
