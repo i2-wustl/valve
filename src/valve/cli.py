@@ -1,7 +1,7 @@
 import signal
 import click
-from valve.core.users_client import UsersClient
-import valve.core.api as app
+import valve.core.api as api
+
 import valve.core.auth
 from pprint import pprint
 from valve.version import __version__
@@ -26,10 +26,10 @@ def users():
 
 @users.command("list")
 def list_users():
-    credentials = valve.core.auth.login()
-    api = app.API(credentials=credentials)
-    users = api.get_users()
-    print(users)
+    credentials = valve.core.auth.login()    
+    client = api.API().init(credentials=credentials)   
+    users = client.users.list()
+    pprint(users)
 
 
 

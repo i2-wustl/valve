@@ -1,4 +1,4 @@
-import os, sys
+import os
 import tomli
 
 def login(user=None, key=None, url=None):
@@ -15,7 +15,7 @@ class Auth():
             self.key = key
             self.url = url
         elif self.ensure_environment_variables():
-            self.user = os.environ['X_API_USER']
+            self.user =os.environ['X_API_USER']
             self.key = os.environ['X_API_KEY']
             self.url = os.environ['X_API_URL']
         elif self.ensure_configuration_file():
