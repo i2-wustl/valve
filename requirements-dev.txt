@@ -3,3 +3,4 @@ clint
 inquirer
 requests
 python-dotenv
+tomli

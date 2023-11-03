@@ -1,6 +1,8 @@
 import signal
 import click
 from valve.core.users_client import UsersClient
+import valve.core.api as app
+import valve.core.auth
 from pprint import pprint
 from valve.version import __version__
 from dotenv import load_dotenv
@@ -24,9 +26,11 @@ def users():
 
 @users.command("list")
 def list_users():
-    client = UsersClient()
-    users = client.list()
-    pprint(users)
+    credentials = valve.core.auth.login()
+    api = app.API(credentials=credentials)
+    users = api.get_users()
+    print(users)
+
 
 
 @cli.command('hello', short_help="subcommand template")
