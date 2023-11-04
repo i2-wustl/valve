@@ -3,10 +3,11 @@ import valve.utils.logger as log
 import requests
 
 class API:
-    def __init__(self, credentials=None):
+    def __init__(self, credentials=None, debug=False):
         self._makeProperties()
         if credentials is None:
             raise Exception("Please supply credentials to the API constructor")
+        self.debug = debug
         self.credentials = credentials
         # import pdb
         # pdb.set_trace()
