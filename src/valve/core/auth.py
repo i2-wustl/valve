@@ -47,3 +47,7 @@ class Auth():
         key = config['credentials']['key']
         url = config['credentials']['url']
         return (user, key, url)
+
+    def __str__(self):
+        cls = self.__class__
+        return f"<{cls.__module__} user:{self.user} key:{self.key} url:{self.url}> object at {id(self)}"

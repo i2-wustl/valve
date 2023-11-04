@@ -62,3 +62,14 @@ class API:
         # if not self.root_url.endswith("/api/"):
         #     self.root_url = os.path.join(self.root_url, "/api")
         return os.path.join(self.root_url, endpoint)
+
+    def __str__(self):
+        cls = self.__class__
+        return "\n".join([
+            f"<{cls.__module__}",
+            f"\tdebug:{self.debug}",
+            f"\tcredentials:{self.credentials}",
+            f"\troot_url:{self.root_url}",
+            f"\tresource_properties:{self.resource_properties}>",
+            f"object at {id(self)}"
+        ])
