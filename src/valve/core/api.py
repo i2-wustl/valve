@@ -3,10 +3,7 @@ import valve.utils.logger as log
 import requests
 
 class API:
-    def __init__(self):
-        pass
-
-    def init(self, credentials=None):
+    def __init__(self, credentials=None):
         self._makeProperties()
         if credentials is None:
             raise Exception("Please supply credentials to the API constructor")
@@ -15,7 +12,6 @@ class API:
         # pdb.set_trace()
 
         self.root_url = credentials.url
-        return self
 
     def _makeProperties(self):
         self.users = Users(self)

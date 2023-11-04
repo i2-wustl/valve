@@ -26,7 +26,7 @@ def users():
 
 @users.command("list")
 def list_users():
-    credentials = valve.core.auth.login()    
-    client = api.API().init(credentials=credentials)   
+    credentials = valve.core.auth.login()
+    client = api.API(credentials=credentials)
     users = client.users.list()
     pprint(users)
