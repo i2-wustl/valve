@@ -1,3 +1,6 @@
+def initialize(api):
+    return Connector(api)
+
 class Connector:
     def __init__(self, api) -> None:
         self._api = api

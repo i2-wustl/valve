@@ -1,3 +1,6 @@
+def initialize(api):
+    return Pipeline(api)
+
 class Pipeline:
     def __init__(self, api) -> None:
         self._api = api

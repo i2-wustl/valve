@@ -1,23 +1,27 @@
 import os
+import sys
+import importlib
 
 import requests
 
 import valve.utils.logger as log
-from valve.core.resources import (
-    users,
-    connector,
-    pipeline,
-    access,
-    config,
-    tables
-)
+
+databasin_resources = [
+    'users',
+    'connector',
+    'pipeline',
+    'access',
+    'config',
+    'tables',
+]
 
 class API:
-    def __init__(self, credentials=None, debug=False):
+    def __init__(self, credentials=None, debug=False, databasin_resources=databasin_resources):
         if credentials is None:
             raise Exception("Please supply credentials to the API constructor")
         self.debug = debug
         self.credentials = credentials
+        self.resource_properties = databasin_resources
         self._make_resource_properties()
         # import pdb
         # pdb.set_trace()
@@ -29,12 +33,14 @@ class API:
             log.logit(msg, color=color)
 
     def _make_resource_properties(self):
-        self.users = users.Users(self)
-        self.connector = connector.Connector(self)
-        self.pipeline = pipeline.Pipeline(self)
-        self.access = access.Access(self)
-        self.config = config.Config(self)
-        self.tables = tables.Tables(self)
+        for resource in self.resource_properties:
+            module_name = '.'.join(['valve.core.resources', resource])
+            self.debugger(f"Adding resource property: '{resource}' -- '{module_name}' to api", color='yellow')
+            # dynamically load the module at runtime
+            importlib.import_module(module_name)
+            # dynamically add the resource attribute at runtime to the api object
+            module = sys.modules[module_name]
+            setattr(self, resource, module.initialize(self))
 
     def _get_auth_headers(self):
         return {

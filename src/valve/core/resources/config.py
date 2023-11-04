@@ -1,3 +1,6 @@
+def initialize(api):
+    return Config(api)
+
 class Config:
     def __init__(self, api) -> None:
         self._api = api

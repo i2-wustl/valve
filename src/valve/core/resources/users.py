@@ -1,3 +1,6 @@
+def initialize(api):
+    return Users(api)
+
 class Users:
     def __init__(self, api) -> None:
         self._api = api

@@ -1,3 +1,6 @@
+def initialize(api):
+    return Tables(api)
+
 class Tables:
     def __init__(self, api) -> None:
         self._api = api
