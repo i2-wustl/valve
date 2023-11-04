@@ -14,6 +14,10 @@ class API:
 
         self.root_url = credentials.url
 
+    def debugger(self, msg, color=None):
+        if self.debug:
+            log.logit(msg, color=color)
+
     def _makeProperties(self):
         self.users = Users(self)
         #self.connector = Connectors(self)
@@ -27,7 +31,11 @@ class API:
 
     def get(self, endpoint):
         headers = self._get_auth_headers()
-        r = requests.get(self._assemble_url(endpoint), headers=headers, verify=False)
+        url = self._assemble_url(endpoint)
+        self.debugger(f"root url: {url}", color='yellow')
+        self.debugger(f"headers: {headers}", color='yellow')
+        self.debugger(f"request type: GET", color='yellow')
+        r = requests.get(url, headers=headers, verify=False)
         return r
 
     def _assemble_url(self, endpoint):
