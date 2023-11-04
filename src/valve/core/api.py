@@ -2,10 +2,10 @@ import os
 import valve.utils.logger as log
 import requests
 
-class API:    
+class API:
     def __init__(self):
         pass
-    
+
     def init(self, credentials=None):
         self._makeProperties()
         if credentials is None:
@@ -16,11 +16,11 @@ class API:
 
         self.root_url = credentials.url
         return self
-    
+
     def _makeProperties(self):
         self.users = Users(self)
         #self.connector = Connectors(self)
-            
+
     def _get_auth_headers(self):
         return {
             "Accept": "application/json",
@@ -52,7 +52,7 @@ class Users:
         """
         response = self._api.get(self._name)
         return response.json()
-    
+
     def add(self, params):
         response = self._api.post(self._name, params)
         return response.json()
