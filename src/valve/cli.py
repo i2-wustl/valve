@@ -30,7 +30,7 @@ def list_users(debug):
     """
     Show users list
     """
-    credentials = valve.core.auth.login()
+    credentials = valve.core.auth.login(debug=debug)
     client = api.API(debug=debug, credentials=credentials)
     users = client.users.list()
     pprint(users)
