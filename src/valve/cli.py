@@ -30,14 +30,3 @@ def list_users():
     client = api.API().init(credentials=credentials)   
     users = client.users.list()
     pprint(users)
-
-
-
-@cli.command('hello', short_help="subcommand template")
-@click.option('--debug', '-d', is_flag=True, show_default=True, default=False, required=True, help="Print extra debugging output")
-def hello(debug):
-    """
-    Short high-level description of the subcommand
-    """
-    import valve.core.api
-    valve.core.api.hello(debug)
