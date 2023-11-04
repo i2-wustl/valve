@@ -1,6 +1,16 @@
 import os
-import valve.utils.logger as log
+
 import requests
+
+import valve.utils.logger as log
+from valve.core.resources import (
+    users,
+    connector,
+    pipeline,
+    access,
+    config,
+    tables
+)
 
 class API:
     def __init__(self, credentials=None, debug=False):
@@ -19,8 +29,12 @@ class API:
             log.logit(msg, color=color)
 
     def _make_resource_properties(self):
-        self.users = Users(self)
-        #self.connector = Connectors(self)
+        self.users = users.Users(self)
+        self.connector = connector.Connector(self)
+        self.pipeline = pipeline.Pipeline(self)
+        self.access = access.Access(self)
+        self.config = config.Config(self)
+        self.tables = tables.Tables(self)
 
     def _get_auth_headers(self):
         return {
@@ -34,7 +48,7 @@ class API:
         url = self._assemble_url(endpoint)
         self.debugger(f"root url: {url}", color='yellow')
         self.debugger(f"headers: {headers}", color='yellow')
-        self.debugger(f"request type: GET", color='yellow')
+        self.debugger("request type: GET", color='yellow')
         r = requests.get(url, headers=headers, verify=False)
         return r
 
@@ -42,34 +56,3 @@ class API:
         # if not self.root_url.endswith("/api/"):
         #     self.root_url = os.path.join(self.root_url, "/api")
         return os.path.join(self.root_url, endpoint)
-
-class Users:
-    def __init__(self, api) -> None:
-        self._api = api
-        self._name = "users"
-
-    def list(self):
-        """
-        Retrieves a list of items from the API.
-
-        Returns:
-            A JSON object representing the list of items.
-        """
-        response = self._api.get(self._name)
-        return response.json()
-
-    def add(self, params):
-        response = self._api.post(self._name, params)
-        return response.json()
-
-    # def delete(self, params):
-    #     client = self.get_client()
-    #     response = client.delete("", json=params, timeout=10)
-    #     client.handle_response(response)
-    #     return response.json()
-
-    # def modify(self, params):
-    #     client = self.get_client()
-    #     response = client.put("", json=params, timeout=10)
-    #     client.handle_response(response)
-    #     return response.json()
