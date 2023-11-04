@@ -24,8 +24,12 @@ def cli():
 def users():
     pass
 
+@users.command("list", short_help="show user list")
 @click.option('--debug', '-d', is_flag=True, show_default=True, default=False, required=True, help="Print extra debugging output")
 def list_users(debug):
+    """
+    Show users list
+    """
     credentials = valve.core.auth.login()
     client = api.API(debug=debug, credentials=credentials)
     users = client.users.list()
