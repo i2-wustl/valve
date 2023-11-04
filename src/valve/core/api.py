@@ -4,11 +4,11 @@ import requests
 
 class API:
     def __init__(self, credentials=None, debug=False):
-        self._makeProperties()
         if credentials is None:
             raise Exception("Please supply credentials to the API constructor")
         self.debug = debug
         self.credentials = credentials
+        self._make_resource_properties()
         # import pdb
         # pdb.set_trace()
 
@@ -18,7 +18,7 @@ class API:
         if self.debug:
             log.logit(msg, color=color)
 
-    def _makeProperties(self):
+    def _make_resource_properties(self):
         self.users = Users(self)
         #self.connector = Connectors(self)
 
