@@ -7,6 +7,7 @@ valid_formats = [ 'json', 'cjson', 'tsv', 'table', 'ctable' ]
 class Printer():
     def __init__(self, data=None):
         self.data = data
+        self.max_list_value_column_width = 100
 
     def render(self, format='json', columns='all'):
         if format not in valid_formats:
@@ -57,12 +58,28 @@ class Printer():
             table = { c: [] for c in columns }
             for row in data:
                 for c in columns:
-                    table[c].append(row[c])
+                    value = self._format_entry(row[c])
+                    table[c].append(value)
             return table
         else:
-            table = [[c, data[c]] for c in columns]
             # assuming simple dictionary -- construct attribute/value table
+            table = [[c, self._format_entry(data[c])] for c in columns]
             return table
+
+    def _format_entry(self, datum):
+        if isinstance(datum, list):
+            return self._collapse_list(datum)
+        elif isinstance(datum, int):
+            return str(datum)
+        else:
+            return datum
+
+    def _collapse_list(self, listdata):
+        full_string = ' | '.join(listdata)
+        max_column_width = self.max_list_value_column_width
+        if len(full_string) > max_column_width:
+            return full_string[:max_column_width]
+        return full_string
 
     def _render_json(self, columns):
         filtered = self._filter_data(columns)
