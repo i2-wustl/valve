@@ -13,7 +13,7 @@ def connector():
               help="Print extra debugging output")
 @click.option('--format', '-f', default="json", required=False, type=click.Choice(pp.valid_formats),
               help="output format")
-def list_pipelines(debug, format):
+def list_connectors(debug, format):
     """
     Show connector list
     """
