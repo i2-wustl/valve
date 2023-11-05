@@ -62,7 +62,7 @@ class Printer():
 
     def _render_json(self, columns):
         filtered = self._filter_data(columns)
-        print(json.dumps(filtered, sort_keys=True, indent=4))
+        print(json.dumps(filtered, sort_keys=True, indent=2))
 
     def _render_cjson(self, columns):
         filtered = self._filter_data(columns)
