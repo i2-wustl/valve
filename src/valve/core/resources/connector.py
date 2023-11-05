@@ -27,6 +27,17 @@ class Connector:
         response = self._api.get(endpoint)
         return response.json()
 
+    def list_catalog_tables(self, connector_id):
+        """
+        Retrieves a list of catalogs associated with a given connector.
+
+        Returns:
+            A JSON object representing the existing list catalogs associated with a given connector.
+        """
+        endpoint = '/'.join([self._name, 'tables', str(connector_id)])
+        response = self._api.get(endpoint)
+        return response.json()
+
     def add(self, params):
         pass
 
