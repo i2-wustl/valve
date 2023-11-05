@@ -24,8 +24,8 @@ def list_pipelines(debug, format):
     printer.render(format=format)
 #    printer.render(format=format, columns=['firstName', 'lastName'])
 
-@connector.command("list-catalogs", short_help="show user list")
-@click.option( '--connector-id', '-c', type=click.INT, required=True,
+@connector.command("list-catalogs", short_help="show catalogs/schemas associated with a connector")
+@click.option('--connector-id', '-c', type=click.INT, required=True,
               help="connector-id associated with the catalogs")
 @click.option('--debug', '-d', is_flag=True, show_default=True, default=False,
               help="Print extra debugging output")
@@ -37,7 +37,7 @@ def list_catalogs(debug, format, connector_id):
     """
     credentials = valve.core.auth.login(debug=debug)
     client = api.API(debug=debug, credentials=credentials)
-    connectors = client.connector.list_catalog(connector_id)
+    connectors = client.connector.list_catalogs(connector_id)
     printer = pp.Printer(connectors)
     printer.render(format=format)
 #    printer.render(format=format, columns=['firstName', 'lastName'])

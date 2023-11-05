@@ -16,7 +16,7 @@ class Connector:
         response = self._api.get(self._name)
         return response.json()
 
-    def list_catalog(self, connector_id):
+    def list_catalogs(self, connector_id):
         """
         Retrieves a list of catalogs associated with a given connector.
 
