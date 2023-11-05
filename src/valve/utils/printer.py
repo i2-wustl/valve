@@ -53,7 +53,7 @@ class Printer():
             raise Exception(msg)
 
     def _construct_tabulate_data_table(self, data, columns):
-        if isinstance(self.data, list):
+        if isinstance(data, list):
             # assuming each element in list is a dictionary containing row data
             table = { c: [] for c in columns }
             for row in data:
