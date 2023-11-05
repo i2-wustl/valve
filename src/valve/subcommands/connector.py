@@ -59,6 +59,22 @@ def list_catalog_tables(debug, format, connector_id):
     printer = pp.Printer(connector_tables)
     printer.render(format=format)
 
+@connector.command("describe", short_help="describe a specific connector")
+@click.option('--debug', '-d', is_flag=True, show_default=True, default=False,
+              help="Print extra debugging output")
+@click.option('--format', '-f', default="json", required=False, type=click.Choice(pp.valid_formats),
+              help="output format")
+@click.argument('connector-id', type=click.INT, required=True)
+def describe(debug, format, connector_id):
+    """
+    Show catalog/schemas associated with connector
+    """
+    credentials = valve.core.auth.login(debug=debug)
+    client = api.API(debug=debug, credentials=credentials)
+    rawdata = client.connector.get(connector_id)
+    printer = pp.Printer(rawdata)
+    printer.render(format=format)
+
 @connector.command("schemas", short_help="show catalogs/schemas associated with a connector")
 @click.option('--connector-id', '-c', type=click.INT, required=True,
               help="connector-id associated with the catalogs")

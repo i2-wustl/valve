@@ -38,6 +38,17 @@ class Connector:
         response = self._api.get(endpoint)
         return response.json()
 
+    def get(self, connector_id):
+        """
+        Retrieves details on a single connector
+
+        Returns:
+            A JSON object representing the details associated with a given connector.
+        """
+        endpoint = '/'.join([self._name, str(connector_id)])
+        response = self._api.get(endpoint)
+        return response.json()
+
     def add(self, params):
         pass
 
