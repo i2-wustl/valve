@@ -61,10 +61,35 @@ class Printer():
                     value = self._format_entry(row[c])
                     table[c].append(value)
             return table
+        elif self._is_data_in_tabulate_format(data):
+            return data
         else:
             # assuming simple dictionary -- construct attribute/value table
             table = [[c, self._format_entry(data[c])] for c in columns]
             return table
+
+    def _is_data_in_tabulate_format(self, data):
+        # tablulate format is a dictionary of the form:
+        # {
+        #    'column_name_1' : [a_value1, a_value2, c_value3],
+        #    'column_name_2' : [b_value1, b_value2, c_value3],
+        #    ...
+        # }
+        # Note: all the list values have the same size
+        if not isinstance(data, dict):
+            return False
+
+        # ensure all column key values are lists
+        for column in data.keys():
+            if not isinstance(data[column], list):
+                return False
+
+        # ensure all column key values have the same size
+        column_lengths = set([len(data[c]) for c in data.keys()])
+        if len(column_lengths) != 1:
+            return False
+
+        return True
 
     def _format_entry(self, datum):
         if isinstance(datum, list):
@@ -94,7 +119,7 @@ class Printer():
     def _render_tsv(self, columns):
         filtered = self._filter_data(columns)
         table = self._construct_tabulate_data_table(filtered, columns)
-        if isinstance(filtered, list):
+        if isinstance(filtered, list) or self._is_data_in_tabulate_format(table):
             print(t.tabulate(table, headers="keys", tablefmt='tsv'))
         elif isinstance(filtered, dict):
             print(t.tabulate(table, headers=['attribute', 'value'], tablefmt='tsv'))
@@ -103,7 +128,7 @@ class Printer():
     def _render_table(self, columns):
         filtered = self._filter_data(columns)
         table = self._construct_tabulate_data_table(filtered, columns)
-        if isinstance(filtered, list):
+        if isinstance(filtered, list) or self._is_data_in_tabulate_format(table):
             print(t.tabulate(table, headers="keys", tablefmt='simple'))
         elif isinstance(filtered, dict):
             print(t.tabulate(table, headers=['attribute', 'value'], tablefmt='simple'))
@@ -111,4 +136,3 @@ class Printer():
 
     def _render_ctable(self, columns):
         raise Exception("Please implement me!")
-
