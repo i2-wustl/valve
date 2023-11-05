@@ -37,12 +37,14 @@ class Printer():
 
     def _filter_data(self, columns):
         if isinstance(self.data, list) and self.data:
+            # assuming each element in list is a dictionary containing row data
             filtered_data = []
             for d in self.data:
                 filtered = { c: d[c] for c in columns }
                 filtered_data.append(filtered)
             return filtered_data
         elif isinstance(self.data, dict):
+            # assuming simple dictionary -- construct attribute/value table
             filtered = { c: self.data[c] for c in columns }
             return filtered
         else:
@@ -51,6 +53,7 @@ class Printer():
 
     def _construct_tabulate_data_table(self, data, columns):
         if isinstance(self.data, list):
+            # assuming each element in list is a dictionary containing row data
             table = { c: [] for c in columns }
             for row in data:
                 for c in columns:
@@ -58,6 +61,7 @@ class Printer():
             return table
         else:
             table = [[c, data[c]] for c in columns]
+            # assuming simple dictionary -- construct attribute/value table
             return table
 
     def _render_json(self, columns):
