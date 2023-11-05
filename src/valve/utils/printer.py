@@ -76,7 +76,7 @@ class Printer():
         if isinstance(filtered, list):
             print(t.tabulate(table, headers="keys", tablefmt='tsv'))
         elif isinstance(filtered, dict):
-            print(t.tabulate, table, headers=['attribute', 'value'], tablefmt='tsv')
+            print(t.tabulate(table, headers=['attribute', 'value'], tablefmt='tsv'))
         sys.stdout.flush()
 
     def _render_table(self, columns):
@@ -85,7 +85,7 @@ class Printer():
         if isinstance(filtered, list):
             print(t.tabulate(table, headers="keys", tablefmt='simple'))
         elif isinstance(filtered, dict):
-            print(t.tabulate, table, headers=['attribute', 'value'], tablefmt='simple')
+            print(t.tabulate(table, headers=['attribute', 'value'], tablefmt='simple'))
         sys.stdout.flush()
 
     def _render_ctable(self, columns):
