@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 
 from valve.version import __version__
 import valve.subcommands.users as u
+import valve.subcommands.pipelines as p
+import valve.subcommands.connector as c
 
 # Load environment variables from .env file
 load_dotenv()
@@ -20,3 +22,5 @@ def cli():
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 cli.add_command(u.users)
+cli.add_command(p.pipelines)
+cli.add_command(c.connector)

@@ -7,7 +7,14 @@ class Pipeline:
         self._name = "pipeline"
 
     def list(self):
-        pass
+        """
+        Retrieves a list of pipelines from the API.
+
+        Returns:
+            A JSON object representing the existing list of pipelines.
+        """
+        response = self._api.get(self._name)
+        return response.json()
 
     def add(self, params):
         pass
