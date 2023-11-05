@@ -43,7 +43,7 @@ class Printer():
                 filtered_data.append(filtered)
             return filtered_data
         elif isinstance(self.data, dict):
-            filtered = { c: d[c] for c in columns }
+            filtered = { c: self.data[c] for c in columns }
             return filtered
         else:
             msg = "[err] Printer does not know how to filter the data"
