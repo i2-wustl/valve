@@ -6,7 +6,7 @@ valid_formats = [ 'json', 'cjson', 'tsv', 'table', 'ctable' ]
 
 class Printer():
     def __init__(self, data=None):
-        self.data = data
+        self.raw_data = data
         self.max_list_value_column_width = 100
 
     def render(self, format='json', columns='all'):
@@ -30,23 +30,23 @@ class Printer():
 
     def _get_all_columns(self):
         columns = None
-        if isinstance(self.data, list) and self.data:
-            columns = sorted(self.data[0].keys())
-        elif self.data:
-            columns = sorted(self.data.keys())
+        if isinstance(self.raw_data, list) and self.raw_data:
+            columns = sorted(self.raw_data[0].keys())
+        elif self.raw_data:
+            columns = sorted(self.raw_data.keys())
         return columns
 
     def _filter_data(self, columns):
-        if isinstance(self.data, list) and self.data:
+        if isinstance(self.raw_data, list) and self.raw_data:
             # assuming each element in list is a dictionary containing row data
             filtered_data = []
-            for d in self.data:
+            for d in self.raw_data:
                 filtered = { c: d[c] for c in columns }
                 filtered_data.append(filtered)
             return filtered_data
-        elif isinstance(self.data, dict):
+        elif isinstance(self.raw_data, dict):
             # assuming simple dictionary -- construct attribute/value table
-            filtered = { c: self.data[c] for c in columns }
+            filtered = { c: self.raw_data[c] for c in columns }
             return filtered
         else:
             msg = "[err] Printer does not know how to filter the data"
