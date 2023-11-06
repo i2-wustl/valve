@@ -19,7 +19,6 @@ def list_users(debug, format):
     """
     credentials = valve.core.auth.login(debug=debug)
     client = api.API(debug=debug, credentials=credentials)
-    import pdb; pdb.set_trace()
     users = client.users.list()
     printer = pp.Printer(users)
     printer.render(format=format)

@@ -16,7 +16,7 @@ class Users:
         response = self._api.get(self._name)
         return response.json()
 
-    def add(self, params):
+    def add(self, params):        
         response = self._api.post(self._name, params)
         return response.json()
 
