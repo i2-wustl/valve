@@ -45,17 +45,19 @@ def list_catalogs(debug, format, connector_id):
 @connector.command("list-catalog-tables", short_help="list raw tables data associated with a connector")
 @click.option('--connector-id', '-c', type=click.INT, required=True,
               help="connector-id associated with the catalogs")
+@click.option('--schema-name', '-s', type=click.STRING, required=True,
+              help="schema name associated with the connector id")
 @click.option('--debug', '-d', is_flag=True, show_default=True, default=False,
               help="Print extra debugging output")
 @click.option('--format', '-f', default="json", required=False, type=click.Choice(pp.valid_formats),
               help="output format")
-def list_catalog_tables(debug, format, connector_id):
+def list_catalog_tables(debug, format, connector_id, schema_name):
     """
     List raw catalog tables list associated with connector
     """
     credentials = valve.core.auth.login(debug=debug)
     client = api.API(debug=debug, credentials=credentials)
-    connector_tables = client.connector.list_catalog_tables(connector_id)
+    connector_tables = client.connector.list_catalog_tables(connector_id, schema_name)
     printer = pp.Printer(connector_tables)
     printer.render(format=format)
 
@@ -98,17 +100,19 @@ def schemas(debug, format, connector_id):
 @connector.command("tables", short_help="show tables associated with a connector")
 @click.option('--connector-id', '-c', type=click.INT, required=True,
               help="connector-id associated with the catalogs")
+@click.option('--schema-name', '-s', type=click.STRING, required=True,
+              help="schema name associated with the connector id")
 @click.option('--debug', '-d', is_flag=True, show_default=True, default=False,
               help="Print extra debugging output")
 @click.option('--format', '-f', default="json", required=False, type=click.Choice(pp.valid_formats),
               help="output format")
-def tables(debug, format, connector_id):
+def tables(debug, format, connector_id, schema_name):
     """
     Show tables associated with connector
     """
     credentials = valve.core.auth.login(debug=debug)
     client = api.API(debug=debug, credentials=credentials)
-    rawdata = client.connector.list_catalog_tables(connector_id)
+    rawdata = client.connector.list_catalog_tables(connector_id, schema_name)
     tables = sorted(rawdata['objects'])
     connector_name = rawdata['connectorName']
     printer = pp.Printer({connector_name: tables})
