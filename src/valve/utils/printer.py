@@ -2,7 +2,7 @@ import json
 import sys
 import tabulate as t
 
-valid_formats = [ 'json', 'cjson', 'tsv', 'table', 'ctable' ]
+valid_formats = [ 'json', 'cjson', 'tsv', 'table', 'ctable', 'html' ]
 
 class Printer():
     def __init__(self, data=None):
@@ -17,7 +17,7 @@ class Printer():
         method_name = self._derive_render_method(format)
         columns = self._derive_data_columns(columns)
         method = getattr(self, method_name)
-        method(columns=columns)
+        return method(columns=columns)
 
     def _derive_render_method(self, format='json'):
         method = '_'.join(['_render', format])
@@ -133,6 +133,16 @@ class Printer():
         elif isinstance(filtered, dict):
             print(t.tabulate(table, headers=['attribute', 'value'], tablefmt='simple'))
         sys.stdout.flush()
+
+    def _render_html(self, columns):
+        filtered = self._filter_data(columns)
+        table = self._construct_tabulate_data_table(filtered, columns)
+        data = '[err] printing trouble'
+        if isinstance(filtered, list) or self._is_data_in_tabulate_format(table):
+            data = t.tabulate(table, headers="keys", tablefmt='html')
+        elif isinstance(filtered, dict):
+            data = t.tabulate(table, headers=['attribute', 'value'], tablefmt='html')
+        return data
 
     def _render_ctable(self, columns):
         raise Exception("Please implement me!")
