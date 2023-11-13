@@ -1,0 +1,7 @@
+- dob:
+    - type: snapshot
+    - tables:
+        - table1
+        - table2
+- schema2: 
+    - table3

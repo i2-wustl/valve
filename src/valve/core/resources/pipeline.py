@@ -22,5 +22,6 @@ class Pipeline:
     def delete(self, params):
         pass
 
-    def modify(self, params):
-        pass
+    def modify(self,  data):
+        response = self._api.put(self._name, data=data)
+        return response.json()

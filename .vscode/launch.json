@@ -11,7 +11,7 @@
             "program": "./venv/bin/valve",
             "console": "integratedTerminal",            
             "justMyCode": false,
-            "args": [  "users", "list"
+            "args": [  "pipelines", "update-clarity", "table1,table2"
             ]
         }
     ]

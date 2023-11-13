@@ -3,6 +3,12 @@ import sys
 import importlib
 
 import requests
+from valve.core.resources.access import Access
+from valve.core.resources.connector import Connector
+from valve.core.resources.pipeline import Pipeline
+from valve.core.resources.tables import Tables
+from valve.core.resources.users import Users
+from valve.core.resources.config import Config
 
 import valve.utils.logger as log
 
@@ -21,11 +27,17 @@ class API:
             raise Exception("Please supply credentials to the API constructor")
         self.debug = debug
         self.credentials = credentials
-        self.resource_properties = databasin_resources
-        self._make_resource_properties()
+        #self.resource_properties = databasin_resources
+        #self._make_resource_properties()
         # import pdb
         # pdb.set_trace()
-
+        self.pipelines = Pipeline(self)
+        self.users = Users(self)
+        self.connectors = Connector(self)
+        self.access = Access(self)
+        self.config = Config(self)
+        self.tables = Tables(self)
+        
         self.root_url = credentials.url
 
     def debugger(self, msg, color=None):
@@ -57,7 +69,15 @@ class API:
         self.debugger("request type: GET", color='yellow')
         r = requests.get(url, headers=headers, verify=False)
         return r
-
+    def put(self, endpoint, data):
+        headers = self._get_auth_headers()
+        url = self._assemble_url(endpoint)
+        self.debugger(f"root url: {url}", color='yellow')
+        self.debugger(f"headers: {headers}", color='yellow')
+        self.debugger("request type: GET", color='yellow')
+        r = requests.put(url, headers=headers, data=data, verify=False)
+        return r
+    
     def _assemble_url(self, endpoint):
         # if not self.root_url.endswith("/api/"):
         #     self.root_url = os.path.join(self.root_url, "/api")
