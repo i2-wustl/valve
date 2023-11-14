@@ -8,5 +8,16 @@
     "**/Thumbs.db": true,
     "**/__pycache__": true,
     "**/*egg*": true
-  }
+  },
+  "todo-tree.tree.scanMode": "workspace only",
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX",
+    "[ ]",
+    "[x]",
+    "Question"
+  ]
 }
