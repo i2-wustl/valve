@@ -9,6 +9,7 @@ class Connector:
     def list(self):
         """
         Retrieves a list of connectors from the API.
+        GET: /api/connectors
 
         Returns:
             A JSON object representing the existing list of connectors.
@@ -19,6 +20,7 @@ class Connector:
     def list_catalogs(self, connector_id):
         """
         Retrieves a list of catalogs associated with a given connector.
+        GET: /api/connectors/{connector_id}/catalogs
 
         Returns:
             A JSON object representing the existing list catalogs associated with a given connector.
@@ -30,6 +32,7 @@ class Connector:
     def list_catalog_tables(self, connector_id, catalog_name):
         """
         Retrieves a list of catalogs associated with a given connector.
+        GET: /api/connectors/{connector_id}/tables?schemaCatalog={catalog_name}
 
         Returns:
             A JSON object representing the existing list catalogs associated with a given connector.
@@ -41,6 +44,7 @@ class Connector:
     def get(self, connector_id):
         """
         Retrieves details on a single connector
+        GET: /api/connectors/{connector_id}
 
         Returns:
             A JSON object representing the details associated with a given connector.
@@ -49,11 +53,38 @@ class Connector:
         response = self._api.get(endpoint)
         return response.json()
 
-    def add(self, params):
-        pass
+    def add(self, connector):
+        """
+        Adds a connector.
+        POST: /api/connectors
+        
+        Returns:
+            A JSON object representing the details associated with the new connector.
+        """
+        
+        response = self._api.post(self._name, data=connector)
+        return response.json()
 
-    def delete(self, params):
-        pass
+    def delete(self, connector_id):
+        """
+        Adds a connector.
+        DELETE: /api/connectors
+        
+        Returns:
+            A JSON object representing the details associated with the new connector.
+        """
+        
+        response = self._api.delete(self._name, data={"connectorID": connector_id})
+        return response.json()
 
-    def modify(self, params):
-        pass
+    def modify(self, connector):
+        """
+        Adds a connector.
+        PUT: /api/connectors/
+        
+        Returns:
+            A JSON object representing the details associated with the new connector.
+        """
+
+        response = self._api.put(self._name, data=connector)
+        return response.json()

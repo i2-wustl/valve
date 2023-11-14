@@ -5,13 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "valve pipelines update-clarity table1,table2",
             "type": "python",
             "request": "launch",
             "program": "./venv/bin/valve",
-            "console": "integratedTerminal",            
+            "console": "integratedTerminal",
             "justMyCode": false,
-            "args": [  "pipelines", "update-clarity", "table1,table2"
+            "args": [
+                "pipelines",
+                "update-clarity",
+                "table1,table2"
             ]
         },
         {
@@ -19,18 +22,30 @@
             "type": "python",
             "request": "launch",
             "program": "./venv/bin/valve",
-            "console": "internalConsole",            
+            "console": "internalConsole",
             "justMyCode": false,
-            "args": [  "teams", "users", "add", "0", "test"]            
+            "args": [
+                "teams",
+                "users",
+                "add",
+                "0",
+                "test"
+            ]
         },
         {
             "name": "valve teams users remove",
             "type": "python",
             "request": "launch",
             "program": "./venv/bin/valve",
-            "console": "internalConsole",            
+            "console": "internalConsole",
             "justMyCode": false,
-            "args": [  "teams", "users", "remove", "0", "test"]            
+            "args": [
+                "teams",
+                "users",
+                "remove",
+                "0",
+                "test"
+            ]
         }
     ]
 }

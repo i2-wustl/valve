@@ -6,6 +6,7 @@ import valve.utils.printer as pp
 
 import requests
 import inquirer
+import os
 
 @click.group("pipelines")
 def pipelines():
@@ -62,7 +63,7 @@ def update_pipeline(debug, format, id, source_id, ingestion_type, schema, table,
 
     data = {
     "pipelineID": id,
-    "clientID": 0, # Question: How to determine this?
+    "clientID": os.environ.get("API_CLIENT_ID", 0), # Question: How to determine this?
     "items": [
             {
                 "artifactType": "database",

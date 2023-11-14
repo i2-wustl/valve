@@ -23,6 +23,8 @@ databasin_resources = [
     'tables',
 ]
 
+#TODO: Implement global error handling for API calls
+
 class API:
     def __init__(self, credentials=None, debug=False, databasin_resources=databasin_resources):
         if credentials is None:
@@ -37,8 +39,9 @@ class API:
         self.users = Users(self)
         self.teams = Teams(self)
         self.connectors = Connector(self)
-        self.access = Access(self)
-        self.config = Config(self)
+        # Question: do we need these after the access / storage refactor?
+        # self.access = Access(self)
+        # self.config = Config(self)
         self.tables = Tables(self)
         
         self.root_url = credentials.url

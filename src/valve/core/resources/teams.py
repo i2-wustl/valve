@@ -40,7 +40,7 @@ class Teams:
         response = self._api.get(self._name + "?name=" + name)
         return response.json()
 
-    def add(self, params):
+    def add(self, team):
         """
         Adds a team.
         POST: /api/teams
@@ -51,7 +51,7 @@ class Teams:
         Returns:
             dict: The JSON response from the API call.
         """
-        response = self._api.post(self._name, json=params)
+        response = self._api.post(self._name, json=team)
         return response.json()
 
     def add_to_team(self, team_id, user_id):      
@@ -90,7 +90,7 @@ class Teams:
             return response.text        
 
     #Question: will we need this? I don't think we will support deleting teams, but maybe we should disable them at this endpoint?
-    def delete(self, params):
+    def delete(self, team_id):
         """
         Deletes a team.
         DELETE: /api/teams/{team_id}
@@ -101,7 +101,7 @@ class Teams:
         Returns:
             dict: The JSON response from the API call.
         """
-        response = self._api.delete(self._name + "/" + str(params["team_id"]), params)
+        response = self._api.delete(self._name, data={"teamID": team_id})
         if response.status_code < 300:
             return response.json()
         else:
