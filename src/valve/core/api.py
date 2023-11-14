@@ -1,10 +1,12 @@
 import os
 import sys
 import importlib
+import json
 
 import requests
 from valve.core.resources.access import Access
 from valve.core.resources.connector import Connector
+from valve.core.resources.teams import Teams
 from valve.core.resources.pipeline import Pipeline
 from valve.core.resources.tables import Tables
 from valve.core.resources.users import Users
@@ -33,6 +35,7 @@ class API:
         # pdb.set_trace()
         self.pipelines = Pipeline(self)
         self.users = Users(self)
+        self.teams = Teams(self)
         self.connectors = Connector(self)
         self.access = Access(self)
         self.config = Config(self)
@@ -74,10 +77,26 @@ class API:
         url = self._assemble_url(endpoint)
         self.debugger(f"root url: {url}", color='yellow')
         self.debugger(f"headers: {headers}", color='yellow')
-        self.debugger("request type: GET", color='yellow')
-        r = requests.put(url, headers=headers, data=data, verify=False)
+        self.debugger("request type: PUT", color='yellow')
+        r = requests.put(url, headers=headers, json=json.dumps(data), verify=False)
         return r
-    
+    def post(self, endpoint, data):
+        headers = self._get_auth_headers()
+        url = self._assemble_url(endpoint)
+        self.debugger(f"root url: {url}", color='yellow')
+        self.debugger(f"headers: {headers}", color='yellow')
+        self.debugger("request type: POST", color='yellow')
+        r = requests.post(url, headers=headers, data=json.dumps(data), verify=False)
+        return r
+    def delete(self, endpoint, data):
+        headers = self._get_auth_headers()
+        url = self._assemble_url(endpoint)
+        self.debugger(f"root url: {url}", color='yellow')
+        self.debugger(f"headers: {headers}", color='yellow')
+        self.debugger("request type: DELETE", color='yellow')
+        
+        r = requests.delete(url, headers=headers, data=json.dumps(data), verify=False)
+        return r    
     def _assemble_url(self, endpoint):
         # if not self.root_url.endswith("/api/"):
         #     self.root_url = os.path.join(self.root_url, "/api")
