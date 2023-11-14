@@ -71,7 +71,25 @@ class Teams:
             return response.json()
         else:
             return response.text
+    def remove_from_team(self, team_id, user_id):      
+        """
+        Remove a user from a team.
+        DELETE: /api/teams/{team_id}/users/{user_id}
 
+        Args:
+            team_id (str): The ID of the team to add the user to.
+            user_id (str): The ID of the user to add to the team.
+
+        Returns:
+            dict: The JSON response from the API call.
+        """
+        response = self._api.delete(self._name + "/" + str(team_id) + "/users/", user_id)
+        if response.status_code < 300:
+            return response.json()
+        else:
+            return response.text        
+
+    #Question: will we need this? I don't think we will support deleting teams, but maybe we should disable them at this endpoint?
     def delete(self, params):
         """
         Deletes a team.

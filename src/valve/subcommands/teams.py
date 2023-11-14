@@ -38,7 +38,7 @@ def users():
               help="Print extra debugging output")
 @click.option('--format', '-f', default="json", required=False, type=click.Choice(pp.valid_formats),
               help="output format")
-def add_user_to_team_group( debug, format, team_id, emails):
+def add_users_to_team_group( debug, format, team_id, emails):
     """
     Add users to team group
     """
@@ -56,3 +56,27 @@ def add_user_to_team_group( debug, format, team_id, emails):
         else:
             printer.render(format=format)
 
+    @users.command("remove", short_help="Remove users from team group")
+    @click.argument('team_id', type=click.INT, required=True)
+    @click.argument('emails', type=click.STRING, required=True, short_help="Comma separated list of email addresses")
+    @click.option('--debug', '-d', is_flag=True, show_default=True, default=False,
+                help="Print extra debugging output")
+    @click.option('--format', '-f', default="json", required=False, type=click.Choice(pp.valid_formats),
+                help="output format")
+    def remove_users_from_team_group( debug, format, team_id, emails):
+        """
+        Remove users to team group
+        """
+        credentials = valve.core.auth.login(debug=debug)
+        client = api.API(debug=debug, credentials=credentials)
+
+        email_list = emails.split(",")
+        for email in email_list:
+            email = email.strip()
+            user_data = client.users.get_by_email(email)
+            response = client.teams.add_to_team(team_id, user_data["id"])
+            printer = pp.Printer(response)
+            if isinstance(response, str):
+                print(response) #TODO: do this better
+            else:
+                printer.render(format=format)
