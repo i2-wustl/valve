@@ -29,3 +29,8 @@ status|command
 [ ]| valve teams list
 [ ]| valve teams users add
 [ ]| valve teams users remove
+
+## Upcoming commands
+[] valve datasources add
+[?] valve datasources meta tag-table
+[?] valve datasources meta tag-field
