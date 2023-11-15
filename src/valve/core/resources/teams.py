@@ -1,145 +1,164 @@
-class Teams:
-    def __init__(self, api) -> None:
-        self._api = api
-        self._name = "teams"
+from valve.core.api import create_client
+import valve.core.resources.users as u
 
-    def list(self):
-        """
-        Retrieves a list of teams from the API.
+__endpoint__ = "teams"
 
-        Returns:
-            dict: The JSON response from the API call.
-        """
-        response = self._api.get(self._name)
-        return response.json()
+def list_teams():
+    """
+    Retrieves a list of teams from the API.
 
-    def get(self, id):
-        """
-        Retrieves a team from the API based on team ID.
+    Returns:
+        dict: The JSON response from the API call.
+    """
+    client = create_client()
+    response = client.get(__endpoint__)        
 
-        Args:
-            id (str): The ID of the team to retrieve.
+    return response
 
-        Returns:
-            dict: The JSON response from the API call.
-        """
-        endpoint = f"{self._name}/{id}"
-        response = self._api.get(endpoint)
-        return response.json()
+def get_team_by_id( id):
+    """
+    Retrieves a team from the API based on team ID.
 
-    def get_by_name(self, name):
-        """
-        Retrieves a team from the API based on team name.
+    Args:
+        id (str): The ID of the team to retrieve.
 
-        Args:
-            name (str): The name of the team to retrieve.
+    Returns:
+        dict: The JSON response from the API call.
+    """
+    endpoint = f"{__endpoint__}/{id}"
+    client = create_client()
+    response = client.get(endpoint)
+    return response
 
-        Returns:
-            dict: The JSON response from the API call.
-        """
-        response = self._api.get(self._name + "?name=" + name)
-        return response.json()
+def get_team_by_name(name):
+    """
+    Retrieves a team from the API based on team name.
 
-    def add(self, team):
-        """
-        Adds a team.
-        POST: /api/teams
+    Args:
+        name (str): The name of the team to retrieve.
 
-        Args:
-            params (dict): The parameters for the add request.
+    Returns:
+        dict: The JSON response from the API call.
+    """
+    client = create_client()
+    response = client.get(__endpoint__ + "?name=" + name)
+    return response
 
-        Returns:
-            dict: The JSON response from the API call.
-        """
-        response = self._api.post(self._name, json=team)
-        return response.json()
+def add_team(team):
+    """
+    Adds a team.
+    POST: /api/teams
 
-    def add_to_team(self, team_id, user_id):      
-        """
-        Adds a user to a team.
-        PUT: /api/teams/{team_id}/users/{user_id}
+    Args:
+        params (dict): The parameters for the add request.
 
-        Args:
-            team_id (str): The ID of the team to add the user to.
-            user_id (str): The ID of the user to add to the team.
+    Returns:
+        dict: The JSON response from the API call.
+    """
+    client = create_client()
+    response = client.post(__endpoint__, json=team)
+    return response
 
-        Returns:
-            dict: The JSON response from the API call.
-        """
-        response = self._api.put(self._name + "/" + str(team_id) + "/users/", user_id)
-        if response.status_code < 300:
-            return response.json()
-        else:
-            return response.text
+def add_to_team(team_id, email):      
+    """
+    Adds a user to a team.
+    PUT: /api/teams/{team_id}/users/{user_id}
+
+    Args:
+        team_id (str): The ID of the team to add the user to.
+        user_id (str): The ID of the user to add to the team.
+
+    Returns:
+        dict: The JSON response from the API call.
+    """
+    user_data = u.get_by_email(email)
+    
+    client = create_client()
+    response = client.put(__endpoint__ + "/" + str(team_id) + "/users/", user_data["id"])
+    if response.status_code < 300:
+        return response
+    else:
+        return response.text
+    
+# def add_team_to_datasource(self, team_id, datasource_group_id):      
+#     """
+#     Adds a user to a team.
+#     PUT: /api/teams/{team_id}/users/{user_id}
+
+#     Args:
+#         team_id (str): The ID of the team to add the user to.
+#         user_id (str): The ID of the user to add to the team.
+
+#     Returns:
+#         dict: The JSON response from the API call.
+#     """
+#     response = self._api.put(self._name + "/" + str(team_id) + "/users/", user_id)
+#     if response.status_code < 300:
+#         return response
+#     else:
+#         return response.text
+            
+def remove_from_team(team_id, user_id):      
+    """
+    Remove a user from a team.
+    DELETE: /api/teams/{team_id}/users/{user_id}
+
+    Args:
+        team_id (str): The ID of the team to add the user to.
+        user_id (str): The ID of the user to add to the team.
+
+    Returns:
+        dict: The JSON response from the API call.
+    """
+    client = create_client()
+    response = client.delete(__endpoint__ + "/" + str(team_id) + "/users/", user_id)
+    if response.status_code < 300:
+        return response
+    else:
+        return response.text
+
+#Question: will we need this? I don't think we will support deleting teams, but maybe we should disable them at this endpoint?
+def delete( team_id):
+    """
+    Deletes a team.
+    DELETE: /api/teams/{team_id}
+
+    Args:
+        params (dict): The parameters for the delete request.
+
+    Returns:
+        dict: The JSON response from the API call.
+    """
+    client = create_client()
+    response = client.delete(__endpoint__, data={"teamID": team_id})
+    if response.status_code < 300:
+        return response
+    else:
+        return response.text
+
+## Question: will we need this? I don't think we will support updating teams
+# def modify(self, params):
+#     """
+#     Modifies a team.
+#     PUT: /api/teams/{team_id}
+
+#     Args:
+#         params (dict): The parameters for the modify request.
+
+#     Returns:
+#         dict: The JSON response from the API call.
+#     """
+#     response = self._api.put(self._name + "/" + str(params["team_id"]), params)
+#     if response.status_code < 300:
+#         return response
+#     else:
+#         return response.text
+#     
+
+
+
+
+
         
-    # def add_team_to_datasource(self, team_id, datasource_group_id):      
-    #     """
-    #     Adds a user to a team.
-    #     PUT: /api/teams/{team_id}/users/{user_id}
+      
 
-    #     Args:
-    #         team_id (str): The ID of the team to add the user to.
-    #         user_id (str): The ID of the user to add to the team.
-
-    #     Returns:
-    #         dict: The JSON response from the API call.
-    #     """
-    #     response = self._api.put(self._name + "/" + str(team_id) + "/users/", user_id)
-    #     if response.status_code < 300:
-    #         return response.json()
-    #     else:
-    #         return response.text
-                
-    def remove_from_team(self, team_id, user_id):      
-        """
-        Remove a user from a team.
-        DELETE: /api/teams/{team_id}/users/{user_id}
-
-        Args:
-            team_id (str): The ID of the team to add the user to.
-            user_id (str): The ID of the user to add to the team.
-
-        Returns:
-            dict: The JSON response from the API call.
-        """
-        response = self._api.delete(self._name + "/" + str(team_id) + "/users/", user_id)
-        if response.status_code < 300:
-            return response.json()
-        else:
-            return response.text        
-
-    #Question: will we need this? I don't think we will support deleting teams, but maybe we should disable them at this endpoint?
-    def delete(self, team_id):
-        """
-        Deletes a team.
-        DELETE: /api/teams/{team_id}
-
-        Args:
-            params (dict): The parameters for the delete request.
-
-        Returns:
-            dict: The JSON response from the API call.
-        """
-        response = self._api.delete(self._name, data={"teamID": team_id})
-        if response.status_code < 300:
-            return response.json()
-        else:
-            return response.text
-
-    ## Question: will we need this? I don't think we will support updating teams
-    # def modify(self, params):
-    #     """
-    #     Modifies a team.
-    #     PUT: /api/teams/{team_id}
-
-    #     Args:
-    #         params (dict): The parameters for the modify request.
-
-    #     Returns:
-    #         dict: The JSON response from the API call.
-    #     """
-    #     response = self._api.put(self._name + "/" + str(params["team_id"]), params)
-    #     if response.status_code < 300:
-    #         return response.json()
-    #     else:
-    #         return response.text

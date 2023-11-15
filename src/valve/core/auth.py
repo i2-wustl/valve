@@ -6,6 +6,8 @@ import valve.utils.logger as log
 def login(user=None, key=None, url=None, debug=False):
     credentials = Auth(user=user, key=key, url=url, debug=debug)
     return credentials
+def refresh_token():
+    pass
 
 class Auth():
     def __init__(self, user, key, url, debug=False):

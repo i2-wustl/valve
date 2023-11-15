@@ -15,12 +15,21 @@
     "HACK",
     "FIXME",
     "TODO",
+    "NOTE",
     "XXX",
     "[ ]",
     "[x]",
     "Question"
   ],
   "cSpell.words": [
-    "ingestiontype"
+    "databasin",
+    "dotenv",
+    "fullmsg",
+    "ingestiontype",
+    "logit",
+    "ORGFILTER",
+    "rawdata",
+    "SIGPIPE",
+    "textui"
   ]
 }

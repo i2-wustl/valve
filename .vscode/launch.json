@@ -5,6 +5,40 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "valve connectors list",
+            "type": "python",
+            "request": "launch",
+            "program": "./venv/bin/valve",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                "connectors",
+                "list"
+            ],
+            "env": {
+                "VALVE_DEBUG": "true"
+            }
+        },
+        {
+            "name": "valve connectors list-catalog-tables",
+            "type": "python",
+            "request": "launch",
+            "program": "./venv/bin/valve",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                "connectors",
+                "list",
+                "-s", 
+                "orgfilter",
+                "-c",
+                "99"
+            ],
+            "env": {
+                "VALVE_DEBUG": "true"
+            }
+        },
+        {
             "name": "valve pipelines update-clarity table1,table2",
             "type": "python",
             "request": "launch",
@@ -14,6 +48,7 @@
             "args": [
                 "pipelines",
                 "update-clarity",
+                "--tables",
                 "table1,table2"
             ]
         },
@@ -59,8 +94,28 @@
                 "add-tables",
                 "--id",
                 "123",
-                "--connector-id", "99", "--schema", "orgfilter", "--tables", "PATIENT_2"                
+                "--connector-id",
+                "99",
+                "--schema",
+                "orgfilter",
+                "--tables",
+                "PATIENT_2"
             ]
-        }
+        },
+        {
+            "name": "valve users list",
+            "type": "python",
+            "request": "launch",
+            "program": "./venv/bin/valve",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                "users",
+                "list"
+            ],
+            "env": {
+                "VALVE_DEBUG": "true"
+            }
+        },
     ]
 }

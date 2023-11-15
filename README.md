@@ -40,14 +40,15 @@ Addtionally, try `valve <subcommand> --help` for more details on a particular su
 ## python interface
 
 ```python
-import valve.core.api as api
-debug = True
-api.hello(debug)
+import valve.core.resources.users as u
+users = u.list()
 ```
+
 
 ## Documentation
 
 For further information please see the corresponding [documentation site][3] _(Coming soon!)_
+
 
 # Development
 
@@ -78,6 +79,10 @@ pip install -e .
 In the root project directory run:
 
     make test
+
+## Debugging
+
+To enable debug statements set the `VALVE_DEBUG` env variable to `true`
 
 [0]: https://demo.databasin.co
 [1]: https://technologypartners.net

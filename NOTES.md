@@ -10,3 +10,22 @@
     - for each table
         - get ingestion
         - build json object
+
+
+## Current commands
+
+status|command
+---|---
+[x]| valve connectors describe
+[x]| valve connectors list
+[x]| valve connectors list-catalog-tables
+[x]| valve connectors list-catalogs
+[x]| valve connectors schemas
+[x]| valve connectors tables
+[x]| valve pipelines add-clarity-tables
+[x]| valve pipelines add-tables
+[x]| valve pipelines list
+[x]| valve users list
+[ ]| valve teams list
+[ ]| valve teams users add
+[ ]| valve teams users remove
