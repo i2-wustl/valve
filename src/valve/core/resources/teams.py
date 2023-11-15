@@ -71,6 +71,25 @@ class Teams:
             return response.json()
         else:
             return response.text
+        
+    # def add_team_to_datasource(self, team_id, datasource_group_id):      
+    #     """
+    #     Adds a user to a team.
+    #     PUT: /api/teams/{team_id}/users/{user_id}
+
+    #     Args:
+    #         team_id (str): The ID of the team to add the user to.
+    #         user_id (str): The ID of the user to add to the team.
+
+    #     Returns:
+    #         dict: The JSON response from the API call.
+    #     """
+    #     response = self._api.put(self._name + "/" + str(team_id) + "/users/", user_id)
+    #     if response.status_code < 300:
+    #         return response.json()
+    #     else:
+    #         return response.text
+                
     def remove_from_team(self, team_id, user_id):      
         """
         Remove a user from a team.

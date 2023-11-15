@@ -17,6 +17,7 @@ class Pipeline:
         response = self._api.get(self._name)
         return response.json()
 
+
     def add(self, pipeline):
         """
         Creates a new pipeline.
@@ -43,10 +44,10 @@ class Pipeline:
         response = self._api.delete(self._name, data={"pipelineId": pipeline_id})
         return response.json()
 
-    def modify(self,  pipeline):
+    def modify_artifacts(self,  pipeline):
         """
-        Modifies a pipeline.
-        PUT: /api/pipelines
+        Modifies a pipeline to add multiple artifacts.
+        PUT: /api/pipelines/artifacts
 
         Args:
             pipeline (Pipeline): The updated pipeline data
@@ -54,5 +55,5 @@ class Pipeline:
         Returns:
             A JSON object representing the updated pipeline.
         """
-        response = self._api.put(self._name, data=pipeline)
+        response = self._api.post(self._name + "/artifacts", data=pipeline)
         return response.json()

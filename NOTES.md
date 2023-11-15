@@ -3,3 +3,10 @@
     - ms sql vs other sql
 1. Dev databricks workspace and dev config db
 
+
+## Next steps
+- auto ingest workflow in databricks
+    - list tables
+    - for each table
+        - get ingestion
+        - build json object

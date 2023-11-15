@@ -33,7 +33,7 @@ def users():
 
 @users.command("add", short_help="Add users to team group")
 @click.argument('team_id', type=click.INT, required=True)
-@click.argument('emails', type=click.STRING, required=True, short_help="Comma separated list of email addresses")
+@click.argument('emails', type=click.STRING, required=True)
 @click.option('--debug', '-d', is_flag=True, show_default=True, default=False,
               help="Print extra debugging output")
 @click.option('--format', '-f', default="json", required=False, type=click.Choice(pp.valid_formats),

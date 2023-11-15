@@ -1,6 +1,7 @@
 def initialize(api):
     return Connector(api)
 
+
 class Connector:
     def __init__(self, api) -> None:
         self._api = api
@@ -25,7 +26,7 @@ class Connector:
         Returns:
             A JSON object representing the existing list catalogs associated with a given connector.
         """
-        endpoint = '/'.join([self._name, 'catalogs', str(connector_id)])
+        endpoint = "/".join([self._name, "catalogs", str(connector_id)])
         response = self._api.get(endpoint)
         return response.json()
 
@@ -37,7 +38,10 @@ class Connector:
         Returns:
             A JSON object representing the existing list catalogs associated with a given connector.
         """
-        endpoint = '/'.join([self._name, 'tables', str(connector_id)]) + f"?schemaCatalog={catalog_name}"
+        endpoint = (
+            "/".join([self._name, "tables", str(connector_id)])
+            + f"?schemaCatalog={catalog_name}"
+        )
         response = self._api.get(endpoint)
         return response.json()
 
@@ -49,19 +53,41 @@ class Connector:
         Returns:
             A JSON object representing the details associated with a given connector.
         """
-        endpoint = '/'.join([self._name, str(connector_id)])
+        endpoint = "/".join([self._name, str(connector_id)])
         response = self._api.get(endpoint)
+        return response.json()
+
+    def get_ingestion_items(self, connector_id, schema, tables):
+        """
+        Retrieves a list of table configurations to add to a pipelines.
+        POST: /api/connector/ingestiontype
+
+        Returns:
+            A JSON object representing the existing list of pipelines.
+        """
+        response = self._api.post(
+            self._name + "/ingestiontype",
+            data={
+                "connectorID": connector_id,
+                "chosenDatabaseSchema": schema,
+                "objects": tables.split(","),
+                "connectorType": "test",
+                "connectorDatabase": "test",
+                "connectorName": "test",
+                "connectorTechnology": "test",
+            },
+        )
         return response.json()
 
     def add(self, connector):
         """
         Adds a connector.
         POST: /api/connectors
-        
+
         Returns:
             A JSON object representing the details associated with the new connector.
         """
-        
+
         response = self._api.post(self._name, data=connector)
         return response.json()
 
@@ -69,11 +95,11 @@ class Connector:
         """
         Adds a connector.
         DELETE: /api/connectors
-        
+
         Returns:
             A JSON object representing the details associated with the new connector.
         """
-        
+
         response = self._api.delete(self._name, data={"connectorID": connector_id})
         return response.json()
 
@@ -81,7 +107,7 @@ class Connector:
         """
         Adds a connector.
         PUT: /api/connectors/
-        
+
         Returns:
             A JSON object representing the details associated with the new connector.
         """

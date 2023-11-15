@@ -46,6 +46,21 @@
                 "0",
                 "test"
             ]
+        },
+        {
+            "name": "valve pipelines add-tables",
+            "type": "python",
+            "request": "launch",
+            "program": "./venv/bin/valve",
+            "console": "internalConsole",
+            "justMyCode": false,
+            "args": [
+                "pipelines",
+                "add-tables",
+                "--id",
+                "123",
+                "--connector-id", "99", "--schema", "orgfilter", "--tables", "PATIENT_2"                
+            ]
         }
     ]
 }

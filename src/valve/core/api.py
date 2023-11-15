@@ -81,7 +81,7 @@ class API:
         self.debugger(f"root url: {url}", color='yellow')
         self.debugger(f"headers: {headers}", color='yellow')
         self.debugger("request type: PUT", color='yellow')
-        r = requests.put(url, headers=headers, json=json.dumps(data), verify=False)
+        r = requests.put(url, headers=headers, json=data, verify=False)
         return r
     def post(self, endpoint, data):
         headers = self._get_auth_headers()
@@ -89,7 +89,7 @@ class API:
         self.debugger(f"root url: {url}", color='yellow')
         self.debugger(f"headers: {headers}", color='yellow')
         self.debugger("request type: POST", color='yellow')
-        r = requests.post(url, headers=headers, data=json.dumps(data), verify=False)
+        r = requests.post(url, headers=headers, json=data, verify=False)
         return r
     def delete(self, endpoint, data):
         headers = self._get_auth_headers()
@@ -98,7 +98,7 @@ class API:
         self.debugger(f"headers: {headers}", color='yellow')
         self.debugger("request type: DELETE", color='yellow')
         
-        r = requests.delete(url, headers=headers, data=json.dumps(data), verify=False)
+        r = requests.delete(url, headers=headers, json=data, verify=False)
         return r    
     def _assemble_url(self, endpoint):
         # if not self.root_url.endswith("/api/"):

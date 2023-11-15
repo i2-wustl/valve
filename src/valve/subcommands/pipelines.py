@@ -29,6 +29,56 @@ def list_pipelines(debug, format):
 
 
 
+@pipelines.command("add-tables", short_help="Add a table to a pipeline")
+@click.option('--id', type=click.INT, required=True)
+@click.option('--connector-id', type=click.INT, required=True)
+@click.option('--schema', type=click.STRING, required=True)
+@click.option('--tables', type=click.STRING, required=True)
+@click.option('--debug', '-d', is_flag=True, show_default=True, default=False,
+              help="Print extra debugging output")
+@click.option('--format', '-f', default="json", required=False, type=click.Choice(pp.valid_formats),
+              help="output format")
+def add_tables(debug, format, id, connector_id,  schema, tables):
+    """
+    Updates a pipeline and adds a table to it
+    """
+
+    credentials = valve.core.auth.login(debug=debug)
+    client = api.API(debug=debug, credentials=credentials)
+
+    items = client.connectors.get_ingestion_items(connector_id, schema, tables)
+
+    data = {
+    "pipelineID": id,
+    "clientID": os.environ.get("API_CLIENT_ID", 0), # Question: How to determine this?
+    "items": [
+            
+        ]
+    }
+
+    print(items)
+    for item in items["objects"]:
+        #data["items"].append(item)
+        data["items"].append(  {
+            "artifactType": items["connectorType"],
+            "ingestionType": item["ingestionType"],
+            "sourceSchemaName": schema,
+            "sourceTableName": item["tableName"],
+            "sourceColumnNames": None,
+            "mergeColumns": ",".join(item["mergeColumns"]),
+            "targetSchemaName": None,
+            "targetTableName": None,
+            "sourceConnectionID": connector_id,
+            "targetConnectionID": 0
+        })
+
+    try:
+        result = client.pipelines.modify_artifacts(data)               
+        printer = pp.Printer(result)
+        printer.render(format=format)
+    except requests.RequestException as e:
+        print(f"Error submitting data: {e}")
+
 
 @pipelines.command("add-table", short_help="Add a table to a pipeline")
 @click.option('--id', type=click.INT, required=True)
