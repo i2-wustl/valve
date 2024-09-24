@@ -11,7 +11,7 @@ def list():
         A JSON object representing the existing list of connectors.
     """
     client = create_client()
-    response = client.get(__endpoint__)
+    response = client.get(f"{__endpoint__}?institutionID=4&internalID=uJEj8d")
     return response
 
 def list_catalogs(connector_id):

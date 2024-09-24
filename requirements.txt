@@ -36,3 +36,4 @@ traitlets==5.11.2
 urllib3==2.0.6
 -e git+ssh://git@github.com/i2-wustl/valve.git@5956b3038da895b3b761388e78f5c6510cc2d847#egg=valve
 wcwidth==0.2.8
+azure.identity
